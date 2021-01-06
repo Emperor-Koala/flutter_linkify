@@ -296,8 +296,11 @@ TextSpan buildTextSpan(
             children: [
               WidgetSpan(
                 child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Text(element.text),
+                  cursor: onOpen != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
+                  child: Text(
+                    element.text,
+                    style: linkStyle,
+                  ),
                 ),
                 style: linkStyle,
               )
