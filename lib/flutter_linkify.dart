@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:linkify/linkify.dart';
 
 export 'package:linkify/linkify.dart'
@@ -280,11 +281,27 @@ TextSpan buildTextSpan(
   LinkCallback onOpen,
 }) {
   return TextSpan(
-    children: elements.map<TextSpan>(
+    children: elements.map<InlineSpan>(
       (element) {
         if (element is LinkableElement) {
+          // return WidgetSpan(
+          //   child: MouseRegion(
+          //     cursor: SystemMouseCursors.click,
+          //     child: Text(element.text),
+          //   ),
+          //   style: linkStyle,
+          // );
           return TextSpan(
-            text: element.text,
+            // text: element.text,
+            children: [
+              WidgetSpan(
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Text(element.text),
+                ),
+                style: linkStyle,
+              )
+            ],
             style: linkStyle,
             recognizer: onOpen != null
                 ? (TapGestureRecognizer()..onTap = () => onOpen(element))
